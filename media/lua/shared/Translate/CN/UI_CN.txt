@@ -1,0 +1,4 @@
+UI_CN = {
+  UI_CloudBlacklist_msg = " <CENTRE> <SIZE:large> <RGB:2,0,0> 你已被被本服务器封禁！ <LINE> <LINE> <CENTRE> <SIZE:small> <RGB:1,1,1> 因违反服务器规导致你的账号在本服务器被封禁！ <LINE> 如果你有任何异议，请联系服务器管理员！",
+  UI_CloudBlacklist_datafail = " <CENTRE> <SIZE:large> <RGB:0,2,1> 接收服务器配置文件失败！ <LINE> <LINE> <CENTRE> <SIZE:small> <RGB:1,1,1> 请尝试重新连接服务器！ <LINE> 如果错误依旧，请联系服务器管理员！",
+}
