@@ -16,29 +16,29 @@ local stringStarts = luautils.stringStarts
 -- @param Url 服务器url
 -- @return table
 function CloudBlacklistServer.readHttpini(Url)
-	local settingsFile = getUrlStream(Url)
-	local inidata = {}
-	local line = nil
-	local section = "empty"
-	while true do
-		line = settingsFile:readLine()
-		if line == nil then
-			settingsFile:close()
-			break
-		end
+  local settingsFile = getUrlStream(Url)
+  local inidata = {}
+  local line = nil
+  local section = "empty"
+  while true do
+    line = settingsFile:readLine()
+    if line == nil then
+      settingsFile:close()
+      break
+    end
 
-		if (stringStarts(line, "[")) then
-			section = sub(line, 2, -2)
-			inidata[section] = {}
-		end
-		if (not stringStarts(line, "[") and not stringStarts(line, "") and line ~= "") then
-			local splitedLine = split(line, "=")
-			local key = splitedLine[1]
-			local value = splitedLine[2]
-			inidata[section][key] = value
-		end
-	end
-	return inidata
+    if (stringStarts(line, "[")) then
+      section = sub(line, 2, -2)
+      inidata[section] = {}
+    end
+    if (not stringStarts(line, "[") and not stringStarts(line, "") and line ~= "") then
+      local splitedLine = split(line, "=")
+      local key = splitedLine[1]
+      local value = splitedLine[2]
+      inidata[section][key] = value
+    end
+  end
+  return inidata
 end
 
 -- 此函数接收客户端sendClientCommand请求
@@ -50,7 +50,7 @@ CloudBlacklistServer.OnClientCommand = function(module, command, player, args)
   if not isServer() then return end
   if module ~= "CheckPlayer" then return end
   if command == "OnJoinGame" then
-    local LIST = CloudBlacklistServer.readHttpini("http://hfs.imsky.cc:777/test.ini")
+    local LIST = CloudBlacklistServer.readHttpini("https://cdn.jsdelivr.net/gh/ProjectSky/CloudBlackList-Config/BlackListConfig.ini")
       for k,v in pairs (LIST["BLACKLIST"]) do
         if k == args.steamid then
           print("Kick User: ", args.name)
