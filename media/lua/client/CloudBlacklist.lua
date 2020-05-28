@@ -7,6 +7,8 @@
 --
 
 local CloudBlacklist = {}
+local sdf = SimpleDateFormat.new("yyyy-MM-dd HH:mm:ss")
+local TIME = sdf:format(Calendar.getInstance():getTime())
 
 -- 此函数将在玩家进入游戏时触发
 -- @param tick 游戏刻
@@ -25,8 +27,15 @@ CloudBlacklist.OnServerCommand = function(module, command, args)
   if module ~= "CloudBlacklistServer" then return end
 	if command == "Disconnect" then
     player:setBlockMovement(true)
-    --player:getInventory():clear()
-    --removeInventoryUI(getPlayer():getPlayerNum())
+    writeLog("CloudBlacklist", getText("Tooltip_CloudBlacklist_trigger", getOnlineUsername(), getCurrentUserSteamID(), TIME))
+    Events.OnTick.Add(CloudBlacklist.ForceExit)
+  end
+end
+
+-- 此函数执行断开操作
+-- @param tick 游戏刻
+CloudBlacklist.ForceExit = function(tick)
+  if tick == 100 then
     disconnect()
   end
 end

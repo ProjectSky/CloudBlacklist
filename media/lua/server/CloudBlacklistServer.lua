@@ -6,6 +6,8 @@
 -- CloudBlacklistServer.lua
 --
 
+local CONFIG_URL = "https://cdn.jsdelivr.net/gh/ProjectSky/CloudBlackList-Config/BlackListConfig.ini"
+
 local CloudBlacklistServer = {}
 local sub = string.sub
 local split = string.split
@@ -31,7 +33,7 @@ function CloudBlacklistServer.readHttpini(Url)
       section = sub(line, 2, -2)
       inidata[section] = {}
     end
-    if (not stringStarts(line, "[") and not stringStarts(line, "") and line ~= "") then
+    if (not stringStarts(line, "[") and not stringStarts(line, ";") and line ~= "") then
       local splitedLine = split(line, "=")
       local key = splitedLine[1]
       local value = splitedLine[2]
@@ -50,13 +52,11 @@ CloudBlacklistServer.OnClientCommand = function(module, command, player, args)
   if not isServer() then return end
   if module ~= "CheckPlayer" then return end
   if command == "OnJoinGame" then
-    local LIST = CloudBlacklistServer.readHttpini("https://cdn.jsdelivr.net/gh/ProjectSky/CloudBlackList-Config/BlackListConfig.ini")
-      for k,v in pairs (LIST["BLACKLIST"]) do
-        if k == args.steamid then
-          print("Kick User: ", args.name)
-          sendServerCommand('CloudBlacklistServer', 'Disconnect', {msg = v})
-          --executeQuery("UPDATE bannedip SET reason = ? WHERE ip = ? AND username = ?", {"12", "114.114.114.115", "test1"})
-        end
+    local LIST = CloudBlacklistServer.readHttpini(CONFIG_URL)
+    for k,v in pairs (LIST["BLACKLIST"]) do
+      if k == args.steamid then
+        sendServerCommand('CloudBlacklistServer', 'Disconnect', {reason = v})
+      end
     end
   end
 end
