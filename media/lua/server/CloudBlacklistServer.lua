@@ -13,6 +13,7 @@ local sub = string.sub
 local split = string.split
 local getUrlStream = getUrlInputStream
 local stringStarts = luautils.stringStarts
+local pairs = pairs
 
 -- 此函数读取远程服务器的http数据流并将其解析成ini格式
 -- @param Url 服务器url
@@ -52,11 +53,15 @@ CloudBlacklistServer.OnClientCommand = function(module, command, player, args)
   if not isServer() then return end
   if module ~= "CheckPlayer" then return end
   if command == "OnJoinGame" then
-    local LIST = CloudBlacklistServer.readHttpini(CONFIG_URL)
-    for k,v in pairs (LIST["BLACKLIST"]) do
-      if k == args.steamid then
-        sendServerCommand('CloudBlacklistServer', 'Disconnect', {reason = v})
+    local LIST, DATA = pcall(CloudBlacklistServer.readHttpini, CONFIG_URL)
+    if LIST and type(DATA["BLACKLIST"]) == "table" then
+      for k, v in pairs(DATA["BLACKLIST"]) do
+        if k == args.steamid then
+          sendServerCommand('CloudBlacklistServer', 'Disconnect', { reason = v })
+        end
       end
+    else
+      sendServerCommand('CloudBlacklistServer', 'LoadFail', {})
     end
   end
 end

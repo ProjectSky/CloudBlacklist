@@ -1,3 +1,8 @@
 Tooltip_CN = {
   Tooltip_CloudBlacklist_trigger = "玩家 %1（2） 于 %3 触发了封禁规则。",
+  Tooltip_CloudBlacklist_loadfail = "玩家 %1（2） 于 %3 处理黑名单列表失败！",
+  
+  Tooltip_CloudBlacklist_Reason_Cheating = "作弊",
+  Tooltip_CloudBlacklist_Reason_Breakrule = "违反服务器规则",
+  Tooltip_CloudBlacklist_Reason_Other = "其它行为",
 }
