@@ -6,7 +6,7 @@
 -- CloudBlacklistServer.lua
 --
 
-local CONFIG_URL = "https://cdn.jsdelivr.net/gh/ProjectSky/CloudBlackList-Config/BlackListConfig.ini"
+local CONFIG_URL = "https://cdn.jsdelivr.net/gh/ProjectSky/CloudBlackList-Config@latest/BlackListConfig.ini"
 
 local CloudBlacklistServer = {}
 local sub = string.sub
