@@ -1,6 +1,6 @@
 Tooltip_EN = {
   Tooltip_CloudBlacklist_trigger = "Player %1(%2) in %3 triggering block rule.",
-  Tooltip_CloudBlacklist_loadfail = "Player %1(2) in %3 processing blacklist failed!",
+  Tooltip_CloudBlacklist_loadfail = "Player %1(%2) in %3 processing blacklist failed!",
   
   Tooltip_CloudBlacklist_Reason_Cheating = "Cheating",
   Tooltip_CloudBlacklist_Reason_Breakrule = "Breaking server rules",
