@@ -34,7 +34,7 @@ function CloudBlacklistServer.readHttpini(Url)
             section = sub(line, 2, -2)
             inidata[section] = {}
         end
-        if (not stringStarts(line, '[') and not stringStarts(line, '#') and not stringStarts(line, ';') and line ~= '') then
+        if (not stringStarts(line, '[') and not stringStarts(line, ';') and not stringStarts(line, '#') and line ~= '') then
             local splitedLine = split(line, '=')
             local key = splitedLine[1]
             local value = splitedLine[2]
@@ -50,12 +50,8 @@ end
 -- @param player 发送请求的玩家
 -- @param args 额外数据
 CloudBlacklistServer.OnClientCommand = function(module, command, player, args)
-    if not isServer() then
-        return
-    end
-    if module ~= 'CheckPlayer' then
-        return
-    end
+    if not isServer() then return end
+    if module ~= 'CheckPlayer' then return end
     if command == 'OnJoinGame' then
         local status, ini = pcall(CloudBlacklistServer.readHttpini, CONFIG_URL)
         if status and type(ini['BLACKLIST']) == 'table' then
