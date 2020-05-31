@@ -6,8 +6,7 @@
 -- CloudBlacklistServer.lua
 --
 
-local CONFIG_URL = 'http://hfs.imsky.cc:777/test.ini'
---local CONFIG_URL = 'https://cdn.jsdelivr.net/gh/ProjectSky/CloudBlackList-Config@latest/BlackListConfig.ini'
+local CONFIG_URL = 'https://cdn.jsdelivr.net/gh/ProjectSky/CloudBlackList-Config@latest/BlackListConfig.ini'
 
 local CloudBlacklistServer = {}
 local pairs = pairs
