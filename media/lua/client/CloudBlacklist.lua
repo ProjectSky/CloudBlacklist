@@ -7,8 +7,7 @@
 --
 
 local CloudBlacklist = {}
-local sdf = SimpleDateFormat.new('yyyy-MM-dd HH:mm:ss')
-local time = sdf:format(Calendar.getInstance():getTime())
+local skyutils = skyutils
 
 -- 此函数将在玩家进入游戏时触发
 -- @param ticks 游戏刻
@@ -36,43 +35,23 @@ CloudBlacklist.OnServerCommand = function(module, command, args)
         end
         CloudBlacklist_loadfail = false
         player:setBlockMovement(true)
-        writeLog('CloudBlacklist', getText('Tooltip_CloudBlacklist_trigger', getOnlineUsername(), getCurrentUserSteamID(), time))
-        Events.OnTick.Add(CloudBlacklist.ForceExit)
-        Events.EveryTenMinutes.Add(CloudBlacklist.EveryTenMinutes)
+        writeLog('CloudBlacklist', getText('Tooltip_CloudBlacklist_trigger', getOnlineUsername(), getCurrentUserSteamID(), skyutils.getCurrentTime()))
+        Events.OnTick.Add(CloudBlacklist.forceDisconnect)
     elseif command == 'LoadFail' then
         CloudBlacklist_loadfail = true
         player:setBlockMovement(true)
-        writeLog('CloudBlacklist', getText('Tooltip_CloudBlacklist_loadfail', getOnlineUsername(), getCurrentUserSteamID(), time))
-        Events.OnTick.Add(CloudBlacklist.ForceExit)
-        Events.EveryTenMinutes.Add(CloudBlacklist.EveryTenMinutes)
+        writeLog('CloudBlacklist', getText('Tooltip_CloudBlacklist_loadfail', getOnlineUsername(), getCurrentUserSteamID(), skyutils.getCurrentTime()))
+        Events.OnTick.Add(CloudBlacklist.forceDisconnect)
     end
-end
-
--- 此函数执行定时操作，每游戏十五分钟执行一次
--- @info 客户端通过tick检查并不可靠，这里再添加一层检查
-CloudBlacklist.EveryTenMinutes = function()
-    disconnect()
 end
 
 -- 此函数执行断开操作
 -- @param ticks 游戏刻
-CloudBlacklist.ForceExit = function(ticks)
-    if ticks == 300 then
-        disconnect()
+CloudBlacklist.forceDisconnect = function(ticks)
+    if ticks and ticks == 300 then
+      disconnect()
+      Events.OnTick.Remove(CloudBlacklist.forceDisconnect)
     end
-end
-
--- 此函数在游戏中显示一个富文本窗口
--- @param text 字符串
-CloudBlacklist.showMSG = function(text)
-    local msg = ISModalRichText:new(getCore():getScreenWidth() / 2 - 300, getCore():getScreenHeight() / 2 - 300, 600, 600, text, false)
-    msg:initialise()
-    msg.chatText:paginate()
-    msg.backgroundColor = {r = 0, g = 0, b = 0, a = 0.9}
-    msg:setHeightToContents()
-    msg:ignoreHeightChange()
-    msg:setVisible(true)
-    msg:addToUIManager()
 end
 
 -- 此函数调用ISServerDisconnectUI.createChildren方法
@@ -80,9 +59,9 @@ local reader = ISServerDisconnectUI.createChildren
 function ISServerDisconnectUI:createChildren()
     reader(self)
     if not CloudBlacklist_loadfail then
-        CloudBlacklist.showMSG(getText('UI_CloudBlacklist_BAN_MSG', getText('Tooltip_CloudBlacklist_Reason_' .. BanReason)))
+        skyutils.showRichText(getText('UI_CloudBlacklist_BAN_MSG', getText('Tooltip_CloudBlacklist_Reason_' .. BanReason)))
     else
-        CloudBlacklist.showMSG(getText('UI_CloudBlacklist_DATAFAIL_MSG'))
+        skyutils.showRichText(getText('UI_CloudBlacklist_DATAFAIL_MSG'))
     end
 end
 

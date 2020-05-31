@@ -1,4 +1,4 @@
 UI_EN = {
-  UI_CloudBlacklist_BAN_MSG = " <CENTRE> <SIZE:large> <RGB:2,0,0> You have been banned by this server！ <LINE> <LINE> <CENTRE> <SIZE:small> <RGB:1,1,1> Your account is blocked on this server! <br> If you don't know why, please contact the server administrator! <LINE> <LINE> Reason：%1",
-  UI_CloudBlacklist_DATAFAIL_MSG = " <CENTRE> <SIZE:large> <RGB:2,0,0> Failed to process server configuration file! <LINE> <LINE> <CENTRE> <SIZE:small> <RGB:1,1,1> Please try connecting to the server again! <LINE> If still error, please contact the server administrator!",
+  UI_CloudBlacklist_BAN_MSG = " <CENTRE> <SIZE:medium> <RGB:2,0,0> You have been banned by this server！ <LINE> <LINE> <CENTRE> <SIZE:small> <RGB:1,1,1> Your account is blocked on this server! <br> If you don't know why, please contact the server administrator! <LINE> <LINE> Reason：%1 <LINE> <LINE> <RGB:0,1,0> this server use cloud blacklist Mod, You may not be able to continue the game on the server where this mod is installed!",
+  UI_CloudBlacklist_DATAFAIL_MSG = " <CENTRE> <SIZE:medium> <RGB:2,0,0> Failed to process server configuration file! <LINE> <LINE> <CENTRE> <SIZE:small> <RGB:1,1,1> Please try connecting to the server again! <LINE> If still error, please contact the server administrator!",
 }
