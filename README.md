@@ -18,12 +18,12 @@
 #### 扩展内容
 * 因API的限制，无法自动封禁玩家，为了解决这个问题，反编译添加了一个用来封禁玩家steamid的函数，使用该函数需要替换服务端的class文件
 * 添加的代码
-```
+``` java
 public static void banSteamID(String steamID, String reason) throws SQLException {
-		if (GameServer.bServer) {
-			ServerWorldDatabase.instance.banSteamID(steamID, reason, true);
-		}
+	if (GameServer.bServer) {
+		ServerWorldDatabase.instance.banSteamID(steamID, reason, true);
 	}
+}
 ```
 * 该函数仅对服务端生效，客户端无法调用，没有安全风险
 * 该扩展是可选功能，不替换也不会影响该MOD的使用（推荐使用，省去手动封禁）
