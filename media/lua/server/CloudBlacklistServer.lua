@@ -9,8 +9,9 @@
 local CONFIG_URL = 'https://cdn.jsdelivr.net/gh/ProjectSky/CloudBlackList-Config@latest/BlackListConfig.ini'
 
 local CloudBlacklistServer = {}
-local pairs = pairs
 local skyutils = skyutils
+local pairs = pairs
+local print = print
 
 -- 此函数接收客户端sendClientCommand请求
 -- @param module 模块
@@ -19,19 +20,20 @@ local skyutils = skyutils
 -- @param args 额外数据
 CloudBlacklistServer.OnClientCommand = function(module, command, player, args)
     if not isServer() then return end
-    if module ~= 'CheckPlayer' then return end
+    if module ~= 'CloudBlacklist' then return end
     if command == 'OnJoinGame' then
         local status, ini = pcall(skyutils.readHttpini, CONFIG_URL)
         if status and type(ini['BLACKLIST']) == 'table' then
             for k, v in pairs(ini['BLACKLIST']) do
                 if k == args.steamid then
                     print("[CloudBlacklist] Player: " .. args.name, "steamid: " .. args.steamid, "Trigger ban rule!")
-                    sendServerCommand('CloudBlacklistServer', 'Disconnect', {reason = v})
+                    skyutils.banSteamID(args.steamid, v)
+                    sendServerCommand('CloudBlacklist', 'Disconnect', {reason = v})
                 end
             end
         else
             print("[CloudBlacklist] Player: " .. args.name, "steamid: " .. args.steamid, "Failed to process rule!")
-            sendServerCommand('CloudBlacklistServer', 'LoadFail', {})
+            sendServerCommand('CloudBlacklist', 'LoadFail', {})
         end
     end
 end

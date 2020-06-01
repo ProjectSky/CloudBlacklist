@@ -10,13 +10,13 @@ skyutils = {}
 
 local getUrlStream = getUrlInputStream
 local stringStarts = luautils.stringStarts
-local print = print
 local pairs = pairs
 local tostring = tostring
 local sub = string.sub
 local rep = string.rep
 local len = string.len
 local split = string.split
+local banID = Keys.banSteamID
 
 -- 此函数在游戏中显示一个富文本窗口
 -- @param text 字符串
@@ -37,6 +37,15 @@ skyutils.getCurrentTime = function()
     local sdf = SimpleDateFormat.new('yyyy-MM-dd HH:mm:ss')
     local time = sdf:format(Calendar.getInstance():getTime())
     return time
+end
+
+-- 此函数用来封禁指定的steamid
+-- @param steamid 玩家的steamid
+-- @param reason 封禁的原因
+-- @info 此函数通过反编译添加，不保证稳定性
+skyutils.banSteamID = function(steamid, reason)
+    if not banID then return end
+    banID(steamid, reason)
 end
 
 -- 此函数读取远程服务器的http数据流并将其解析成ini格式

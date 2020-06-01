@@ -14,7 +14,7 @@ local skyutils = skyutils
 CloudBlacklist.OnTick = function(ticks)
     if ticks and ticks > 0 then return end
     if isClient() then
-        sendClientCommand(getPlayer(), 'CheckPlayer', 'OnJoinGame', {name = getOnlineUsername(), steamid = getCurrentUserSteamID()})
+        sendClientCommand(getPlayer(), 'CloudBlacklist', 'OnJoinGame', {name = getOnlineUsername(), steamid = getCurrentUserSteamID()})
     end
     Events.OnTick.Remove(CloudBlacklist.OnTick)
 end
@@ -26,7 +26,7 @@ end
 CloudBlacklist.OnServerCommand = function(module, command, args)
     local player = getPlayer()
     if not isClient() then return end
-    if module ~= 'CloudBlacklistServer' then return end
+    if module ~= 'CloudBlacklist' then return end
     if command == 'Disconnect' then
         if args.reason then
             BanReason = args.reason
